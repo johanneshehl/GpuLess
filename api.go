@@ -152,7 +152,13 @@ func (a *App) apiSetupKaggle(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
 	defer cancel()
 	if err := NewKaggleClient(in.Username, in.Key).Verify(ctx); err != nil {
-		writeError(w, http.StatusBadGateway, "Kaggle did not accept those credentials: "+err.Error())
+		msg := "Kaggle did not accept those credentials: " + err.Error()
+		if errorsIs(err, ErrKaggleAuth) {
+			// A freshly generated token is often refused for a few minutes,
+			// so the message says to wait rather than to look for a typo.
+			msg = bundle(pickLanguage(a.cfg(), r))["setup.kaggleRejected"]
+		}
+		writeError(w, http.StatusBadGateway, msg)
 		return
 	}
 

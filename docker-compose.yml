@@ -1,0 +1,22 @@
+services:
+  gpuless:
+    image: ghcr.io/johanneshehl/gpuless:latest
+    # Or build it yourself:
+    # build: .
+    container_name: gpuless
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    # The image runs as uid 10001. A bind mount keeps the host's ownership,
+    # so either chown the directory to 10001 or set `user:` to your own uid.
+    # A named volume needs neither.
+    volumes:
+      - ./data:/data
+      # Drop replacement ComfyUI graphs in here to override the built-ins.
+      - ./workflows:/workflows:ro
+    environment:
+      GPULESS_WORKFLOWS: /workflows
+      # Set this only when a reverse proxy in front terminates TLS, otherwise
+      # any client can claim any address.
+      # GPULESS_BEHIND_PROXY: "1"
+      TZ: Europe/Berlin

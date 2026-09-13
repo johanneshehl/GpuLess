@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #000; color: #ededed; font: 14px/1.5 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { color: #a1a1a1; text-decoration: none; } a:hover { color: #ededed; }
+    .m { font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .lbl { font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+    .lbl span { color: #666666; font-weight: 400; }
+  </style>
+</helmet>
+
+<div style="min-height: 1020px; display: flex; flex-direction: column; background-color: #000; background-image: radial-gradient(#1c1c1c 1px, transparent 1px); background-size: 24px 24px;">
+
+  <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; position: relative;">
+    <div style="position: absolute; inset: 0; background: radial-gradient(620px 460px at 50% 46%, rgba(0,0,0,0.94) 30%, rgba(0,0,0,0) 100%); pointer-events: none;"></div>
+
+    <div style="position: relative; width: 100%; max-width: 640px; display: flex; flex-direction: column; align-items: center;">
+
+      <span style="display: flex; color: #ededed;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="3" stroke="currentColor" stroke-width="1.6"></rect><rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.6"></rect><path d="M3.6 8H6M3.6 12H6M3.6 16H6M18 8h2.4M18 12h2.4M18 16h2.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      </span>
+      <h1 style="font-size: 28px; font-weight: 600; letter-spacing: -1px; margin: 20px 0 0;">Set up gpuless</h1>
+      <p style="color: #a1a1a1; margin: 8px 0 0; line-height: 1.55; text-align: center;">Three steps, then the panel is ready to use.</p>
+
+      <div style="width: 100%; border: 1px solid #1f1f1f; border-radius: 12px; background: #0a0a0a; text-align: left; margin-top: 32px;">
+
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid #1f1f1f; font-size: 13px;">
+          <div style="padding: 14px 18px; color: #666666; display: flex; gap: 8px; align-items: center;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#50e3c2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Administrator
+          </div>
+          <div style="padding: 14px 18px; color: #ededed; display: flex; gap: 8px; box-shadow: inset 0 -2px 0 #ededed;">
+            <span class="m" style="color: #666666;">2</span>
+            Kaggle
+          </div>
+          <div style="padding: 14px 18px; color: #666666; display: flex; gap: 8px;">
+            <span class="m" style="color: #666666;">3</span>
+            Tunnel
+          </div>
+          <div style="padding: 14px 18px; color: #666666; display: flex; gap: 8px;">
+            <span class="m" style="color: #666666;">4</span>
+            Models
+          </div>
+        </div>
+
+        <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+
+          <div>
+            <h2 style="font-size: 20px; font-weight: 600; letter-spacing: -0.6px; margin: 0;">Connect your Kaggle account</h2>
+            <p style="margin: 4px 0 0; color: #a1a1a1; line-height: 1.55; text-wrap: pretty;">gpuless runs the models on Kaggle's free GPU time — 30 hours a week. It uses <b style="color: #ededed; font-weight: 500;">your</b> account and nobody else's, and nothing is sent anywhere but Kaggle.</p>
+          </div>
+
+          <div style="border: 1px solid #1f1f1f; border-radius: 8px; overflow: hidden;">
+            <div style="display: flex; align-items: center; padding: 8px 12px; background: #111111; font-size: 12px; color: #a1a1a1; border-bottom: 1px solid #1f1f1f;">Where to find the token</div>
+            <pre class="m" style="margin: 0; padding: 12px 14px; font-size: 12px; line-height: 1.7; color: #a1a1a1; white-space: pre-wrap; word-break: break-all;">kaggle.com <i style="color: #7cc4ff; font-style: normal;">→</i> Settings <i style="color: #7cc4ff; font-style: normal;">→</i> API <i style="color: #7cc4ff; font-style: normal;">→</i> <b style="color: #ededed; font-weight: 400;">Create New Token</b>
+Downloads <b style="color: #ededed; font-weight: 400;">kaggle.json</b> — drop it below or paste the two values.</pre>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <span class="lbl">Username</span>
+              <div class="m" style="height: 40px; padding: 0 12px; border: 1px solid #262626; border-radius: 6px; background: #000; display: flex; align-items: center; font-size: 13px;">jhehl</div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <span class="lbl">API token</span>
+              <div class="m" style="height: 40px; padding: 0 12px; border: 1px solid #262626; border-radius: 6px; background: #000; display: flex; align-items: center; font-size: 13px; letter-spacing: 2px; color: #a1a1a1;">••••••••••••••••••••</div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #0f3d33; background: #071613; border-radius: 8px; font-size: 13px;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink: 0;"><path d="M3 8.5l3 3 7-7" stroke="#50e3c2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span style="color: #50e3c2;">Connected as <b class="m" style="font-weight: 400;">jhehl</b></span>
+            <span style="margin-left: auto; color: #a1a1a1;">GPU quota <span class="m" style="color: #ededed;">30 h</span> per week</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span class="lbl">Preferred accelerator <span>can be changed later</span></span>
+            <div style="height: 40px; padding: 0 12px; border: 1px solid #262626; border-radius: 6px; background: #000; display: flex; align-items: center; gap: 10px;">
+              <span style="flex: 1;">T4 ×2 — best for image and audio</span>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#a1a1a1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: flex-start; gap: 12px; padding-top: 16px; border-top: 1px solid #1f1f1f;">
+            <button type="button" style="width: 32px; height: 18px; border-radius: 999px; background: #ededed; border: 0; position: relative; cursor: pointer; flex-shrink: 0; margin-top: 2px; padding: 0;">
+              <span style="position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: #000; transform: translateX(14px); display: block;"></span>
+            </button>
+            <div>
+              <div style="font-size: 13px; font-weight: 500;">Stop the kernel after 5 idle minutes</div>
+              <div style="font-size: 12px; color: #666666; margin-top: 2px; line-height: 1.6; text-wrap: pretty;">Kaggle keeps charging the weekly hours while a session is open. Restarting on your next click costs about 40 seconds.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding: 16px 24px; border-top: 1px solid #1f1f1f; background: #050505; display: flex; align-items: center; gap: 8px; border-radius: 0 0 12px 12px;">
+          <button type="button" style="height: 36px; padding: 0 16px; border: 1px solid #333333; border-radius: 6px; background: none; color: #ededed; font: 500 14px 'Geist', sans-serif; cursor: pointer;">Back</button>
+          <span style="margin-left: auto; font-size: 12px; color: #666666;">Step 2 of 4</span>
+          <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 6px; background: #ededed; color: #000; font: 500 14px 'Geist', sans-serif; cursor: pointer;">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 12px; color: #666666; padding: 0 0 28px;">
+    <span>gpuless 0.4</span>
+    <span style="color: #262626;">·</span>
+    <a href="#" style="color: #ededed;">English</a>
+    <a href="#">Deutsch</a>
+    <a href="#">Español</a>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

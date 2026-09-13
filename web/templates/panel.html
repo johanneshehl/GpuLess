@@ -1,0 +1,32 @@
+{{define "panel.html"}}<!doctype html>
+<html lang="{{.Lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>gpuless</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts.css">
+<link rel="stylesheet" href="/static/gpuless.css">
+<script type="application/json" id="i18n">{"lang":{{.Lang}},"strings":{{json .Strings}},"user":{{json .Extra}},"version":{{.Version}}}</script>
+</head>
+<body>
+<header class="app-head">
+  <div class="app-bar">
+    <a class="brand" href="/"><span id="mark"></span><span>gpuless</span></a>
+    <span class="slash">/</span>
+    <span class="muted" id="hostLabel"></span>
+    <div class="right" style="position:relative" id="userWrap">
+      <button class="avatar" id="avatarBtn" type="button" aria-haspopup="true"></button>
+      <div class="menu" id="userMenu" hidden></div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+<div class="kbar" id="kbar"><div class="inner" id="kbarInner"></div></div>
+<main id="view"></main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="/static/common.js"></script>
+<script src="/static/panel.js"></script>
+</body>
+</html>{{end}}

@@ -1,0 +1,7 @@
+.git
+.github
+data
+design
+docs
+*.md
+*_test.go

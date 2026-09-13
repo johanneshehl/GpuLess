@@ -1,0 +1,6 @@
+/* Geist ships with the panel rather than being fetched from a font CDN: a
+   self-hosted panel should not phone home, and it must work offline. Drop
+   Geist.woff2 and GeistMono.woff2 into web/static/fonts to use them; without
+   those files the stacks below fall back to the system UI face. */
+@font-face { font-family: 'Geist'; src: url('fonts/Geist.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Geist Mono'; src: url('fonts/GeistMono.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }

@@ -1,0 +1,59 @@
+{{define "login.html"}}<!doctype html>
+<html lang="{{.Lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>gpuless</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/fonts.css">
+<link rel="stylesheet" href="/static/gpuless.css">
+<script type="application/json" id="i18n">{"lang":{{.Lang}},"strings":{{json .Strings}}}</script>
+</head>
+<body>
+<div class="split">
+  <div class="split-art">
+    <span class="brand"><span id="mark"></span>gpuless</span>
+    <div class="claim">
+      <h2>A GPU your<br>server doesn't have.</h2>
+      <p>Image and voice models running on the 30 free GPU hours your own Kaggle account gets every week. The box in your cupboard only has to serve the page.</p>
+      <div class="chips">
+        <span class="chip">Self-hosted</span>
+        <span class="chip">Your Kaggle quota, not ours</span>
+        <span class="chip">Runs on a Pi</span>
+      </div>
+      <div class="split-foot">
+        <span class="mono">gpuless {{.Version}}</span>
+        <span class="dim">·</span>
+        <a href="https://github.com/johanneshehl/GpuLess" rel="noreferrer noopener">Source</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="split-form">
+    <div class="inner">
+      <span class="eyebrow">Welcome back</span>
+      <h1>{{index .Strings "common.signIn"}}</h1>
+      <form class="form" id="loginForm">
+        <label class="label">Email
+          <input class="field" type="email" name="email" autocomplete="username" required autofocus>
+        </label>
+        <label class="label">Password
+          <input class="field" type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="remember" checked><span class="box"></span>
+          Stay signed in for 30 days
+        </label>
+        <button class="btn primary" style="height:42px;border-radius:8px" type="submit">{{index .Strings "common.signIn"}}</button>
+      </form>
+      <div class="langs">
+        {{range $i, $l := .Languages}}{{if $i}}<span class="sep">·</span>{{end}}<a data-lang="{{$l.Code}}" class="{{if eq $l.Code $.Lang}}on{{end}}">{{$l.Name}}</a>{{end}}
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/common.js"></script>
+<script src="/static/login.js"></script>
+</body>
+</html>{{end}}

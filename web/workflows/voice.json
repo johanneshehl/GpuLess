@@ -1,0 +1,32 @@
+{
+  "_gpuless": {
+    "title": "XTTS v2 text to speech",
+    "output_nodes": ["3"],
+    "note": "Text to speech is not built into ComfyUI. This graph targets an XTTS node pack in the runtime dataset. If your pack uses different class names, drop a replacement voice.json into the workflows directory - the panel prefers it over this default and needs no rebuild.",
+    "bind": {
+      "model":    ["1", "model_path"],
+      "text":     ["2", "text"],
+      "language": ["2", "language"],
+      "speaker":  ["2", "speaker_wav"],
+      "speed":    ["2", "speed"]
+    }
+  },
+  "1": {
+    "class_type": "XTTSLoader",
+    "inputs": { "model_path": "xtts_v2" }
+  },
+  "2": {
+    "class_type": "XTTSGenerate",
+    "inputs": {
+      "model": ["1", 0],
+      "text": "",
+      "language": "en",
+      "speaker_wav": "amelie.wav",
+      "speed": 1.0
+    }
+  },
+  "3": {
+    "class_type": "SaveAudio",
+    "inputs": { "audio": ["2", 0], "filename_prefix": "gpuless" }
+  }
+}

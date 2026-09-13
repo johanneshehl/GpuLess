@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #000; color: #ededed; font: 14px/1.5 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { color: #a1a1a1; text-decoration: none; } a:hover { color: #ededed; }
+    .m { font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .chip { padding: 6px 12px; border: 1px solid #262626; border-radius: 999px; font-size: 13px; color: #a1a1a1; background: rgba(0,0,0,0.6); }
+  </style>
+</helmet>
+
+<div style="min-height: 900px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+
+  <div style="position: relative; overflow: hidden; padding: 48px 56px; display: flex; flex-direction: column; border-right: 1px solid #1f1f1f;">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(#111111 1px, transparent 1px), linear-gradient(90deg, #111111 1px, transparent 1px); background-size: 64px 64px;"></div>
+    <div style="position: absolute; width: 520px; height: 520px; right: -160px; bottom: -160px; border-radius: 50%; background: conic-gradient(from 200deg, #050505, #262626, #050505); opacity: 0.9;"></div>
+
+    <a href="#" style="position: relative; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; color: #ededed;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="3" stroke="currentColor" stroke-width="1.6"></rect><rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.6"></rect><path d="M3.6 8H6M3.6 12H6M3.6 16H6M18 8h2.4M18 12h2.4M18 16h2.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      <span>gpuless</span>
+    </a>
+
+    <div style="position: relative; margin-top: auto;">
+      <h2 style="font-size: 52px; font-weight: 600; letter-spacing: -2.4px; line-height: 1.02; margin: 0; text-wrap: pretty;">A GPU your<br>server doesn't have.</h2>
+      <p style="color: #a1a1a1; margin: 18px 0 0; font-size: 16px; max-width: 430px; line-height: 1.5; text-wrap: pretty;">Image, text and audio models running on the 30 free GPU hours your own Kaggle account gets every week. The box in your cupboard only has to serve the page.</p>
+      <div style="display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap;">
+        <span class="chip">Self-hosted</span>
+        <span class="chip">Your Kaggle quota, not ours</span>
+        <span class="chip">Runs on a Pi</span>
+      </div>
+      <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #1f1f1f; font-size: 12px; color: #666666; display: flex; align-items: center; gap: 10px;">
+        <span class="m">gpuless 0.4</span>
+        <span style="color: #262626;">·</span>
+        <a href="#">Source on GitHub</a>
+        <span style="color: #262626;">·</span>
+        <a href="#">Docs</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #0a0a0a; display: flex; align-items: center; justify-content: center; padding: 48px 24px;">
+    <div style="width: 100%; max-width: 380px;">
+
+      <span style="font-size: 13px; color: #a1a1a1;">Welcome back</span>
+      <h1 style="font-size: 28px; font-weight: 600; letter-spacing: -1px; margin: 4px 0 0;">Sign in</h1>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px;">
+
+        <label style="font-size: 13px; font-weight: 500; display: flex; flex-direction: column; gap: 8px;">
+          Email
+          <div style="height: 42px; padding: 0 12px; border: 1px solid #333333; border-radius: 8px; background: #000; display: flex; align-items: center; color: #666666;">you@example.com</div>
+        </label>
+
+        <label style="font-size: 13px; font-weight: 500; display: flex; flex-direction: column; gap: 8px;">
+          Password
+          <div style="height: 42px; padding: 0 12px; border: 1px solid #ededed; border-radius: 8px; background: #000; box-shadow: 0 0 0 3px rgba(237,237,237,0.12); display: flex; align-items: center; letter-spacing: 3px; color: #a1a1a1;">•••••••••••</div>
+        </label>
+
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #a1a1a1; cursor: pointer; margin-top: 2px;">
+          <span style="width: 16px; height: 16px; border-radius: 4px; border: 1px solid #ededed; background: #ededed; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span style="width: 8px; height: 4px; border-left: 2px solid #000; border-bottom: 2px solid #000; transform: translateY(-1px) rotate(-45deg); display: block;"></span>
+          </span>
+          Stay signed in for 30 days
+        </label>
+
+        <button type="button" style="height: 42px; border: 0; border-radius: 8px; background: #ededed; color: #000; font: 500 14px 'Geist', sans-serif; cursor: pointer; margin-top: 4px;">Sign in</button>
+
+        <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px; margin-top: 4px;">
+          <a href="#">Forgot password</a>
+          <a href="#">Use a recovery code</a>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; color: #666666; font-size: 12px; margin-top: 28px;">
+        <span style="flex: 1; height: 1px; background: #262626; display: block;"></span>
+        or
+        <span style="flex: 1; height: 1px; background: #262626; display: block;"></span>
+      </div>
+
+      <a href="#" style="height: 42px; display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid #333333; border-radius: 8px; background: #000; color: #ededed; font-weight: 500; font-size: 14px; margin-top: 16px;">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 .5a7.5 7.5 0 00-2.37 14.62c.37.07.51-.16.51-.36v-1.3c-2.09.45-2.53-1-2.53-1-.34-.87-.83-1.1-.83-1.1-.68-.47.05-.46.05-.46.75.05 1.15.77 1.15.77.67 1.15 1.76.82 2.19.63.07-.49.26-.82.48-1.01-1.67-.19-3.43-.84-3.43-3.73 0-.82.29-1.5.77-2.02-.08-.19-.34-.96.07-2 0 0 .63-.2 2.06.77a7.1 7.1 0 013.75 0c1.43-.97 2.06-.77 2.06-.77.41 1.04.15 1.81.07 2 .48.52.77 1.2.77 2.02 0 2.9-1.76 3.53-3.44 3.72.27.23.51.69.51 1.39v2.06c0 .2.14.44.51.36A7.5 7.5 0 008 .5z" fill="#ededed"></path></svg>
+        Continue with GitHub
+      </a>
+
+      <div style="display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 12px; color: #666666; margin-top: 40px;">
+        <a href="#" style="color: #ededed;">English</a>
+        <span style="color: #262626;">·</span>
+        <a href="#">Deutsch</a>
+        <span style="color: #262626;">·</span>
+        <a href="#">Español</a>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

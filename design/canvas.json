@@ -1,0 +1,16 @@
+{
+  "artboards": [
+    { "file": "Login.dc.html",    "x": 0,    "y": 0,    "w": 1440, "h": 900,  "title": "Sign in" },
+    { "file": "Setup.dc.html",    "x": 1560, "y": 0,    "w": 1440, "h": 1020, "title": "Setup — step 2, Kaggle" },
+    { "file": "Tunnel.dc.html",   "x": 3120, "y": 0,    "w": 1440, "h": 1020, "title": "Setup — step 3, tunnel" },
+    { "file": "Main.dc.html",     "x": 0,    "y": 1140, "w": 1440, "h": 1000, "title": "Image" },
+    { "file": "Voice.dc.html",    "x": 1560, "y": 1140, "w": 1440, "h": 1000, "title": "Voice — kernel cold start" },
+    { "file": "Settings.dc.html", "x": 0,    "y": 2260, "w": 1440, "h": 2880, "title": "Settings" }
+  ],
+  "annotations": [
+    { "id": "note-onboarding", "x": 0, "y": -170, "w": 470, "text": "First boot: sign in, then four steps. Step 2 takes the operator's OWN Kaggle token; step 3 the tunnel, because a Kaggle kernel accepts no incoming connections and the panel usually sits behind a router." },
+    { "id": "note-kernel", "x": 3120, "y": 1140, "w": 440, "text": "The strip under the tabs is the whole kernel lifecycle in one line: running / idle countdown / cold start. Voice shows the cold start after an auto-stop.\n\nKaggle's API has no stop endpoint, so the kernel times itself out and exits — the panel only asks it to." },
+    { "id": "note-quota", "x": 1560, "y": 2260, "w": 450, "text": "Quota is the panel's own tally — Kaggle exposes no endpoint for hours left. Settings says so instead of pretending the number is authoritative.\n\nKaggle also runs its own notebook image, so the ComfyUI runtime ships as a mounted dataset rather than a container." }
+  ],
+  "launch": { "view": "canvas" }
+}

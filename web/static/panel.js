@@ -16,7 +16,7 @@ $('#avatarBtn').addEventListener('click', () => {
   const m = $('#userMenu');
   if (m.hidden) {
     m.replaceChildren(
-      el('div', { class: 'menu-head' }, CAPS.Email || '', el('span', {}, 'administrator')),
+      el('div', { class: 'menu-head' }, CAPS.Email || '', el('span', {}, t('menu.role'))),
       el('button', { type: 'button', onclick: signOut }, t('common.signOut')));
   }
   m.hidden = !m.hidden;
@@ -71,7 +71,7 @@ function drawKernelBar() {
     bits.push(el('span', { class: 'sep' }, '·'));
     bits.push(status.panel.keep_alive
       ? el('span', { class: 'muted' }, t('kernel.keepAlive'))
-      : el('span', { class: 'muted', html: t('kernel.idle', { t: '<span class="mono" style="color:var(--text)">' + clock(k.stops_in) + '</span>' }) }));
+      : el('span', { class: 'muted', html: t('kernel.idle', { t: '<span class="mono text-t">' + clock(k.stops_in) + '</span>' }) }));
   }
   if (k.state === 'failed' && k.failure) {
     bits.push(el('span', { class: 'sep' }, '·'), el('span', { style: 'color:var(--err)' }, k.failure));
@@ -192,7 +192,7 @@ function drawImage() {
     fg(t('image.seed'), el('div', { class: 'input', style: 'gap:8px' },
       el('input', {
         class: 'mono grow', id: 'iSeed', type: 'number', min: 0, value: imageForm.seed || '',
-        placeholder: 'random', style: 'background:none;border:0;outline:0',
+        placeholder: t('image.seedAuto'), style: 'background:none;border:0;outline:0',
         oninput: (e) => { imageForm.seed = +e.target.value; },
       }),
       el('button', {
@@ -282,7 +282,7 @@ function drawVoice() {
     fg(t('voice.voice'), el('input', {
       class: 'input mono', value: voiceForm.speaker,
       oninput: (e) => { voiceForm.speaker = e.target.value; },
-    }), 'sample file in the voice dataset'),
+    }), t('voice.voiceHint')),
     fg(t('voice.language'), seg('vLang', S.strings ? langOptions() : [], voiceForm.language,
       (v) => { voiceForm.language = v; draw(); })),
     fg(t('voice.speed'), el('input', {
@@ -387,51 +387,51 @@ function drawSettings() {
   const cards = [
     card('kaggle', t('settings.kaggle'),
       el('span', { class: 'badge ' + (s.kaggle_key_set ? 'ok' : 'warn') }, el('i', { class: 'dot ' + (s.kaggle_key_set ? 'ok' : 'warn') }),
-        s.kaggle_key_set ? 'connected' : 'not set'),
-      'The panel signs in as you. Revoke the token on kaggle.com at any time and nothing here can start a session again.',
+        s.kaggle_key_set ? t('settings.connected') : t('settings.notSet')),
+      t('settings.kaggleSub'),
       el('div', { class: 'fields' },
-        el('label', {}, 'Username', el('input', { class: 'input mono', value: s.kaggle_username, oninput: bind('kaggle_username') })),
-        el('label', {}, 'API token', el('input', { class: 'input mono', type: 'password', placeholder: s.kaggle_key_set ? '••••••••••••' : '', oninput: bind('kaggle_key') })),
-        el('label', {}, 'Preferred accelerator',
+        el('label', {}, t('setup.username'), el('input', { class: 'input mono', value: s.kaggle_username, oninput: bind('kaggle_username') })),
+        el('label', {}, t('setup.apiToken'), el('input', { class: 'input mono', type: 'password', placeholder: s.kaggle_key_set ? '••••••••••••' : '', oninput: bind('kaggle_key') })),
+        el('label', {}, t('setup.accel'),
           el('select', { class: 'input', oninput: bind('accelerator') },
             el('option', { value: 'T4x2', selected: s.accelerator === 'T4x2' }, 'T4 ×2'),
             el('option', { value: 'P100', selected: s.accelerator === 'P100' }, 'P100')))),
       [el('button', { class: 'btn primary', onclick: save }, t('common.save')),
-       el('span', { class: 'right small dim' }, 'leave the token empty to keep the stored one')]),
+       el('span', { class: 'right small dim' }, t('settings.keepSecret'))]),
 
     card('tunnel', t('settings.tunnel'), null,
-      'A Kaggle kernel accepts no incoming connections, so it dials out to a Cloudflare tunnel and this panel talks to that hostname. Your server stays behind its router.',
+      t('settings.tunnelSub'),
       el('div', { class: 'fields' },
-        el('label', {}, 'Hostname', el('input', { class: 'input mono', value: s.tunnel_host, oninput: bind('tunnel_host') })),
-        el('label', {}, 'Tunnel token', el('input', { class: 'input mono', type: 'password', placeholder: s.tunnel_token_set ? '••••••••••••' : '', oninput: bind('tunnel_token') }))),
+        el('label', {}, t('settings.hostname'), el('input', { class: 'input mono', value: s.tunnel_host, oninput: bind('tunnel_host') })),
+        el('label', {}, t('setup.tunnelToken'), el('input', { class: 'input mono', type: 'password', placeholder: s.tunnel_token_set ? '••••••••••••' : '', oninput: bind('tunnel_token') }))),
       [el('button', { class: 'btn primary', onclick: save }, t('common.save'))]),
 
     card('budget', t('settings.budget'), null,
-      'Kaggle has no API for the hours you have left, so gpuless counts them itself — it starts and stops every session, so the tally is its own. Hours you use directly on kaggle.com are not in this number.',
+      t('settings.budgetSub'),
       el('div', {},
         el('div', { class: 'usage' },
           el('div', { class: 'top' },
             el('b', {}, k.used_hours.toFixed(1)),
-            el('span', { class: 'muted' }, 'of ' + k.quota_hours.toFixed(0) + ' hours used this week'),
-            el('span', { class: 'right small dim' }, k.resets_at ? 'resets ' + when(k.resets_at) : '')),
+            el('span', { class: 'muted' }, t('settings.usedWeek', { n: k.quota_hours.toFixed(0) })),
+            el('span', { class: 'right small dim' }, k.resets_at ? t('quota.resets', { when: when(k.resets_at) }) : '')),
           el('div', { class: 'bar' },
             el('i', { style: 'flex:' + Math.max(pct, 0.5) + ';background:var(--ok)' }),
             el('i', { style: 'flex:' + Math.max(100 - pct, 0.5) + ';background:var(--line)' }))),
         el('div', { class: 'fields' },
-          el('label', {}, 'Weekly quota (hours)', el('input', { class: 'input mono', type: 'number', min: 1, max: 200, value: s.weekly_quota_hours, oninput: bind('weekly_quota_hours') })),
-          el('label', {}, 'Warn at (%)', el('input', { class: 'input mono', type: 'number', min: 1, max: 100, value: s.quota_warn_pct, oninput: bind('quota_warn_pct') })),
-          el('label', {}, 'Refuse at (%)', el('input', { class: 'input mono', type: 'number', min: 1, max: 100, value: s.quota_block_pct, oninput: bind('quota_block_pct') })))),
+          el('label', {}, t('settings.quotaHours'), el('input', { class: 'input mono', type: 'number', min: 1, max: 200, value: s.weekly_quota_hours, oninput: bind('weekly_quota_hours') })),
+          el('label', {}, t('settings.warnAt'), el('input', { class: 'input mono', type: 'number', min: 1, max: 100, value: s.quota_warn_pct, oninput: bind('quota_warn_pct') })),
+          el('label', {}, t('settings.refuseAt'), el('input', { class: 'input mono', type: 'number', min: 1, max: 100, value: s.quota_block_pct, oninput: bind('quota_block_pct') })))),
       [el('button', { class: 'btn primary', onclick: save }, t('common.save'))]),
 
     card('kernel', t('settings.kernel'), null,
-      'A running session spends your weekly hours whether or not anything is being generated. Kaggle itself ends interactive sessions after 20 idle minutes; stopping earlier keeps more of the budget.',
+      t('settings.kernelSub'),
       el('div', {},
         el('div', { class: 'toggle-line' }, toggle('warm_on_visit', s.warm_on_visit),
           el('div', { class: 'grow' }, el('div', { class: 't' }, t('settings.warmVisit')),
-            el('div', { class: 's' }, 'Starts the kernel when someone opens the panel, before they type anything.'))),
+            el('div', { class: 's' }, t('settings.warmSub')))),
         el('div', { class: 'toggle-line' }, toggle('keep_alive', s.keep_alive),
           el('div', { class: 'grow' }, el('div', { class: 't' }, t('settings.keepAlive')),
-            el('div', { class: 's' }, 'Off by default — an open tab overnight can cost most of a week\'s hours.'))),
+            el('div', { class: 's' }, t('settings.keepSub')))),
         el('div', { class: 'fields' },
           el('label', {}, t('settings.idleStop') + ' (' + t('common.minutes') + ')',
             el('input', { class: 'input mono', type: 'number', min: 1, max: 120, value: s.idle_stop_minutes, oninput: bind('idle_stop_minutes') })),
@@ -440,24 +440,24 @@ function drawSettings() {
       [el('button', { class: 'btn primary', onclick: save }, t('common.save'))]),
 
     card('models', t('settings.models'), null,
-      'Kaggle runs its own notebook image, so gpuless cannot ship a container to it. The ComfyUI runtime and the weights live as datasets on your account and are mounted at start.',
+      t('settings.modelsSub'),
       el('div', { class: 'fields' },
-        el('label', {}, 'Runtime dataset', el('input', { class: 'input mono', value: s.dataset_runtime, oninput: bind('dataset_runtime') })),
-        el('label', {}, 'Image model', el('input', { class: 'input mono', value: s.dataset_sdxl, oninput: bind('dataset_sdxl') })),
-        el('label', {}, 'Voice model', el('input', { class: 'input mono', value: s.dataset_xtts, oninput: bind('dataset_xtts') }))),
+        el('label', {}, t('setup.runtime'), el('input', { class: 'input mono', value: s.dataset_runtime, oninput: bind('dataset_runtime') })),
+        el('label', {}, t('setup.imageModel'), el('input', { class: 'input mono', value: s.dataset_sdxl, oninput: bind('dataset_sdxl') })),
+        el('label', {}, t('setup.voiceModel'), el('input', { class: 'input mono', value: s.dataset_xtts, oninput: bind('dataset_xtts') }))),
       [el('button', { class: 'btn primary', onclick: save }, t('common.save')),
-       el('span', { class: 'right small dim' }, 'workflows: ' + s.workflows.join(', '))]),
+       el('span', { class: 'right small dim' }, t('settings.workflows', { list: s.workflows.join(', ') }))]),
 
     card('language', t('settings.language'), null,
-      'Applies to this panel for everyone who uses it.',
+      t('settings.languageSub'),
       el('div', {},
         el('div', { class: 'fields' },
-          el('label', {}, 'Panel language',
+          el('label', {}, t('settings.panelLang'),
             el('select', { class: 'input', oninput: bind('language') },
               langOptions().map(([c, n]) => el('option', { value: c, selected: s.language === c }, n))))),
         el('div', { class: 'toggle-line' }, toggle('follow_browser', s.follow_browser),
-          el('div', { class: 'grow' }, el('div', { class: 't' }, 'Follow the browser language'),
-            el('div', { class: 's' }, 'Falls back to English when the browser asks for something else.')))),
+          el('div', { class: 'grow' }, el('div', { class: 't' }, t('settings.follow')),
+            el('div', { class: 's' }, t('settings.followSub'))))),
       [el('button', { class: 'btn primary', onclick: save }, t('common.save'))]),
   ];
 

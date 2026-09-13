@@ -72,6 +72,11 @@ type KernelStatus struct {
 
 var ErrKaggleAuth = errors.New("kaggle rejected the credentials")
 
+// isAccessToken tells the API tokens from Settings > API Tokens ("KGAT_...")
+// apart from legacy keys out of kaggle.json. Tokens go in a bearer header on
+// their own; legacy keys are paired with the username in basic auth.
+func isAccessToken(key string) bool { return strings.HasPrefix(key, "KGAT_") }
+
 func (k *KaggleClient) do(ctx context.Context, method, path string, body any, out any) error {
 	var rdr io.Reader
 	if body != nil {
@@ -85,7 +90,11 @@ func (k *KaggleClient) do(ctx context.Context, method, path string, body any, ou
 	if err != nil {
 		return err
 	}
-	req.SetBasicAuth(k.Username, k.Key)
+	if isAccessToken(k.Key) {
+		req.Header.Set("Authorization", "Bearer "+k.Key)
+	} else {
+		req.SetBasicAuth(k.Username, k.Key)
+	}
 	req.Header.Set("Accept", "application/json")
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")

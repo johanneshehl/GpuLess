@@ -11,50 +11,48 @@ let state = {};
 const draw = {
   admin: () => [
     el('div', {},
-      el('h2', {}, 'Create the administrator'),
-      el('p', {}, 'This account signs in to the panel. It is stored on your server and nowhere else.')),
-    field('Email', el('input', { class: 'input', type: 'email', id: 'email', autocomplete: 'username', placeholder: 'you@example.com' })),
-    field('Password', el('input', { class: 'input', type: 'password', id: 'password', autocomplete: 'new-password' }), 'at least 10 characters'),
+      el('h2', {}, t('setup.adminTitle')),
+      el('p', {}, t('setup.adminLead'))),
+    field(t('login.email'), el('input', { class: 'input', type: 'email', id: 'email', autocomplete: 'username', placeholder: 'you@example.com' })),
+    field(t('login.password'), el('input', { class: 'input', type: 'password', id: 'password', autocomplete: 'new-password' }), t('setup.pwHint')),
   ],
 
   kaggle: () => [
     el('div', {},
-      el('h2', {}, 'Connect your Kaggle account'),
-      el('p', { html: "gpuless runs the models on Kaggle's free GPU time — 30 hours a week. It uses <b>your</b> account and nobody else's, and nothing is sent anywhere but Kaggle." })),
-    codeBox('Where to find the token',
-      'kaggle.com <i>→</i> Settings <i>→</i> API <i>→</i> <b>Create New Token</b>\nDownloads <b>kaggle.json</b> — it holds the two values below.'),
+      el('h2', {}, t('setup.kaggleTitle')),
+      el('p', { html: t('setup.kaggleLead') })),
+    codeBox(t('setup.kaggleWhere'), t('setup.kaggleSteps')),
     el('div', { class: 'grid2' },
-      field('Username', el('input', { class: 'input mono', id: 'kuser', autocomplete: 'off', placeholder: 'jhehl' })),
-      field('API token', el('input', { class: 'input mono', id: 'kkey', type: 'password', autocomplete: 'off' }))),
-    field('Preferred accelerator', select('accel', [
-      ['T4x2', 'T4 ×2 — best for image and voice'],
+      field(t('setup.username'), el('input', { class: 'input mono', id: 'kuser', autocomplete: 'off', placeholder: 'jhehl' })),
+      field(t('setup.apiToken'), el('input', { class: 'input mono', id: 'kkey', type: 'password', autocomplete: 'off' }))),
+    field(t('setup.accel'), select('accel', [
+      ['T4x2', t('setup.accelBest')],
       ['P100', 'P100'],
-    ]), 'a request, not a guarantee — the panel shows what Kaggle actually gave you'),
+    ]), t('setup.accelHint')),
   ],
 
   tunnel: () => [
     el('div', {},
-      el('h2', {}, 'Give the kernel a way back'),
-      el('p', {}, 'A Kaggle kernel accepts no incoming connections, so it dials out to a Cloudflare tunnel and this panel talks to that hostname. Your server never needs an open port.')),
-    codeBox('Where to get the token',
-      'one.dash.cloudflare.com <i>→</i> Networks <i>→</i> Tunnels <i>→</i> <b>Create a tunnel</b>\nRoute a public hostname to <b>http://localhost:8189</b>, then copy the token.'),
+      el('h2', {}, t('setup.tunnelTitle')),
+      el('p', {}, t('setup.tunnelLead'))),
+    codeBox(t('setup.tunnelWhere'), t('setup.tunnelSteps')),
     el('div', { class: 'grid2' },
-      field('Public hostname', el('input', { class: 'input mono', id: 'thost', placeholder: 'gpu.example.com', autocomplete: 'off' })),
-      field('Tunnel token', el('input', { class: 'input mono', id: 'ttoken', type: 'password', autocomplete: 'off' }))),
+      field(t('setup.host'), el('input', { class: 'input mono', id: 'thost', placeholder: 'gpu.example.com', autocomplete: 'off' })),
+      field(t('setup.tunnelToken'), el('input', { class: 'input mono', id: 'ttoken', type: 'password', autocomplete: 'off' }))),
     el('div', { class: 'note warn note-row' }, icon.warn(),
-      el('span', {}, 'Kaggle has no way to hand a secret to a notebook over the API, so the token is written into the notebook source. gpuless always pushes it private — do not make that notebook public.')),
+      el('span', {}, t('setup.tunnelWarn'))),
   ],
 
   models: () => [
     el('div', {},
-      el('h2', {}, 'Point at your datasets'),
-      el('p', {}, 'Kaggle runs its own notebook image, so gpuless cannot ship a container to it. The ComfyUI runtime and the model weights live as datasets on your account and are mounted at start — seconds instead of a multi-gigabyte download every time.')),
-    field('Runtime dataset', el('input', { class: 'input mono', id: 'dsrun', placeholder: 'you/gpuless-runtime', autocomplete: 'off' }),
-      'required — carries ComfyUI, its nodes and cloudflared'),
+      el('h2', {}, t('setup.modelsTitle')),
+      el('p', {}, t('setup.modelsLead'))),
+    field(t('setup.runtime'), el('input', { class: 'input mono', id: 'dsrun', placeholder: 'you/gpuless-runtime', autocomplete: 'off' }),
+      t('setup.runtimeHint')),
     el('div', { class: 'grid2' },
-      field('Image model', el('input', { class: 'input mono', id: 'dssdxl', placeholder: 'you/gpuless-sdxl', autocomplete: 'off' }), 'leave empty to hide the Image tab'),
-      field('Voice model', el('input', { class: 'input mono', id: 'dsxtts', placeholder: 'you/gpuless-xtts', autocomplete: 'off' }), 'leave empty to hide the Voice tab')),
-    el('p', { class: 'hint' }, 'See docs/runtime-dataset.md in the repository for what goes in the runtime dataset and how to build it.'),
+      field(t('setup.imageModel'), el('input', { class: 'input mono', id: 'dssdxl', placeholder: 'you/gpuless-sdxl', autocomplete: 'off' }), t('setup.imageHint')),
+      field(t('setup.voiceModel'), el('input', { class: 'input mono', id: 'dsxtts', placeholder: 'you/gpuless-xtts', autocomplete: 'off' }), t('setup.voiceHint'))),
+    el('p', { class: 'hint' }, t('setup.docs')),
   ],
 };
 
@@ -102,7 +100,7 @@ function render() {
     el('button', { class: 'btn', disabled: step === 0, onclick: back }, t('common.back')),
     el('span', { class: 'right small dim' }, t('setup.step', { n: step + 1 })),
     el('button', { class: 'btn primary', onclick: next },
-      step === STEPS.length - 1 ? 'Finish' : t('common.continue')));
+      step === STEPS.length - 1 ? t('setup.finish') : t('common.continue')));
 
   const first = $('#body input');
   if (first) first.focus();

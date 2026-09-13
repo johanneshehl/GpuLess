@@ -22,6 +22,24 @@ func TestBundleFallsBackToEnglish(t *testing.T) {
 	}
 }
 
+func TestTranslationsAreComplete(t *testing.T) {
+	// A key only English has shows up as English text in the middle of a
+	// German or Spanish page, so every visible string needs all languages.
+	for _, l := range languages {
+		if l.Code == "en" {
+			continue
+		}
+		for k := range translations["en"] {
+			if k == "app.name" {
+				continue
+			}
+			if _, ok := translations[l.Code][k]; !ok {
+				t.Errorf("%s is missing %s", l.Code, k)
+			}
+		}
+	}
+}
+
 func TestEveryLanguageHasTheNavigation(t *testing.T) {
 	// These are the strings a visitor sees before anything else.
 	keys := []string{"nav.image", "nav.voice", "nav.settings", "common.signIn", "quota.week"}

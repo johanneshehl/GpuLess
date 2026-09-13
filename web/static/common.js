@@ -17,6 +17,9 @@ function el(tag, attrs, ...kids) {
     if (v === false || v === null || v === undefined) continue;
     if (k === 'class') n.className = v;
     else if (k === 'html') n.innerHTML = v;
+    // The CSP has no 'unsafe-inline' for styles, which drops style attributes;
+    // setting them through the CSSOM is allowed.
+    else if (k === 'style') n.style.cssText = v;
     else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
     else if (v === true) n.setAttribute(k, '');
     else n.setAttribute(k, v);

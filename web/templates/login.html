@@ -15,37 +15,37 @@
   <div class="split-art">
     <span class="brand"><span id="mark"></span>gpuless</span>
     <div class="claim">
-      <h2>A GPU your<br>server doesn't have.</h2>
-      <p>Image and voice models running on the 30 free GPU hours your own Kaggle account gets every week. The box in your cupboard only has to serve the page.</p>
+      <h2>{{index .Strings "login.claim1"}}<br>{{index .Strings "login.claim2"}}</h2>
+      <p>{{index .Strings "login.claimSub"}}</p>
       <div class="chips">
-        <span class="chip">Self-hosted</span>
-        <span class="chip">Your Kaggle quota, not ours</span>
-        <span class="chip">Runs on a Pi</span>
+        <span class="chip">{{index .Strings "login.chipHosted"}}</span>
+        <span class="chip">{{index .Strings "login.chipQuota"}}</span>
+        <span class="chip">{{index .Strings "login.chipPi"}}</span>
       </div>
       <div class="split-foot">
         <span class="mono">gpuless {{.Version}}</span>
         <span class="dim">·</span>
-        <a href="https://github.com/johanneshehl/GpuLess" rel="noreferrer noopener">Source</a>
+        <a href="https://github.com/johanneshehl/GPULess" rel="noreferrer noopener">{{index .Strings "login.source"}}</a>
       </div>
     </div>
   </div>
 
   <div class="split-form">
     <div class="inner">
-      <span class="eyebrow">Welcome back</span>
+      <span class="eyebrow">{{index .Strings "login.welcome"}}</span>
       <h1>{{index .Strings "common.signIn"}}</h1>
       <form class="form" id="loginForm">
-        <label class="label">Email
+        <label class="label">{{index .Strings "login.email"}}
           <input class="field" type="email" name="email" autocomplete="username" required autofocus>
         </label>
-        <label class="label">Password
+        <label class="label">{{index .Strings "login.password"}}
           <input class="field" type="password" name="password" autocomplete="current-password" required>
         </label>
         <label class="check">
           <input type="checkbox" name="remember" checked><span class="box"></span>
-          Stay signed in for 30 days
+          {{index .Strings "login.remember"}}
         </label>
-        <button class="btn primary" style="height:42px;border-radius:8px" type="submit">{{index .Strings "common.signIn"}}</button>
+        <button class="btn primary btn-tall" type="submit">{{index .Strings "common.signIn"}}</button>
       </form>
       <div class="langs">
         {{range $i, $l := .Languages}}{{if $i}}<span class="sep">·</span>{{end}}<a data-lang="{{$l.Code}}" class="{{if eq $l.Code $.Lang}}on{{end}}">{{$l.Name}}</a>{{end}}

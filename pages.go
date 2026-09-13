@@ -2,11 +2,14 @@ package main
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"embed"
+	"encoding/hex"
 	"encoding/json"
 	"html/template"
 	"io/fs"
 	"net/http"
+	"sync"
 )
 
 //go:embed web/templates/*.html
@@ -41,12 +44,33 @@ func staticHandler() http.Handler {
 	})
 }
 
+// assetTag is a short hash over the embedded static files. Templates append
+// it to every asset URL, so a new build reaches the browser at once instead
+// of after the cache runs out.
+var assetTag = sync.OnceValue(func() string {
+	h := sha256.New()
+	fs.WalkDir(staticFS, "web/static", func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return err
+		}
+		b, err := staticFS.ReadFile(p)
+		if err != nil {
+			return err
+		}
+		h.Write([]byte(p))
+		h.Write(b)
+		return nil
+	})
+	return hex.EncodeToString(h.Sum(nil))[:10]
+})
+
 // pageData is what every template receives.
 type pageData struct {
 	Lang      string
 	Strings   map[string]string
 	Languages []Language
 	Version   string
+	Asset     string
 	Extra     map[string]any
 }
 
@@ -58,6 +82,7 @@ func (a *App) render(w http.ResponseWriter, r *http.Request, name string, extra 
 		Strings:   bundle(lang),
 		Languages: languageList(),
 		Version:   version,
+		Asset:     assetTag(),
 		Extra:     extra,
 	}
 	var buf bytes.Buffer

@@ -31,17 +31,25 @@ const draw = {
     ]), t('setup.accelHint')),
   ],
 
-  tunnel: () => [
-    el('div', {},
-      el('h2', {}, t('setup.tunnelTitle')),
-      el('p', {}, t('setup.tunnelLead'))),
-    codeBox(t('setup.tunnelWhere'), t('setup.tunnelSteps')),
-    el('div', { class: 'grid2' },
-      field(t('setup.host'), el('input', { class: 'input mono', id: 'thost', placeholder: 'gpu.example.com', autocomplete: 'off' })),
-      field(t('setup.tunnelToken'), el('input', { class: 'input mono', id: 'ttoken', type: 'password', autocomplete: 'off' }))),
-    el('div', { class: 'note warn note-row' }, icon.warn(),
-      el('span', {}, t('setup.tunnelWarn'))),
-  ],
+  tunnel: () => {
+    // The instructions show the hostname as it is typed, so it is clear which
+    // value goes into which Cloudflare field.
+    const box = codeBox(t('setup.tunnelWhere'), tunnelSteps(''));
+    return [
+      el('div', {},
+        el('h2', {}, t('setup.tunnelTitle')),
+        el('p', {}, t('setup.tunnelLead'))),
+      box,
+      el('div', { class: 'grid2' },
+        field(t('setup.host'), el('input', {
+          class: 'input mono', id: 'thost', placeholder: 'gpu.example.com', autocomplete: 'off',
+          oninput: (e) => { $('pre', box).innerHTML = tunnelSteps(e.target.value); },
+        }), t('setup.hostHint')),
+        field(t('setup.tunnelToken'), el('input', { class: 'input mono', id: 'ttoken', type: 'password', autocomplete: 'off' }))),
+      el('div', { class: 'note warn note-row' }, icon.warn(),
+        el('span', {}, t('setup.tunnelWarn'))),
+    ];
+  },
 
   models: () => [
     el('div', {},
@@ -78,6 +86,12 @@ function field(label, control, hint) {
 
 function select(id, options) {
   return el('select', { class: 'input', id }, options.map(([v, l]) => el('option', { value: v }, l)));
+}
+
+function tunnelSteps(host) {
+  const bare = host.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  const safe = bare.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  return t('setup.tunnelSteps', { host: safe || 'gpu.example.com' });
 }
 
 function codeBox(head, html) {

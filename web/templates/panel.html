@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>gpuless</title>
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/static/fonts.css">
-<link rel="stylesheet" href="/static/gpuless.css">
+<link rel="stylesheet" href="/static/fonts.css?v={{.Asset}}">
+<link rel="stylesheet" href="/static/gpuless.css?v={{.Asset}}">
 <script type="application/json" id="i18n">{"lang":{{.Lang}},"strings":{{json .Strings}},"user":{{json .Extra}},"version":{{.Version}}}</script>
 </head>
 <body>
@@ -26,7 +26,7 @@
 <div class="kbar" id="kbar"><div class="inner" id="kbarInner"></div></div>
 <main id="view"></main>
 <div id="toast" role="status" aria-live="polite"></div>
-<script src="/static/common.js"></script>
-<script src="/static/panel.js"></script>
+<script src="/static/common.js?v={{.Asset}}"></script>
+<script src="/static/panel.js?v={{.Asset}}"></script>
 </body>
 </html>{{end}}

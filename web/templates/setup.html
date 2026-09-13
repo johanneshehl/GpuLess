@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>gpuless</title>
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/static/fonts.css">
-<link rel="stylesheet" href="/static/gpuless.css">
+<link rel="stylesheet" href="/static/fonts.css?v={{.Asset}}">
+<link rel="stylesheet" href="/static/gpuless.css?v={{.Asset}}">
 <script type="application/json" id="i18n">{"lang":{{.Lang}},"strings":{{json .Strings}}}</script>
 </head>
 <body>
@@ -30,7 +30,7 @@
     {{range $i, $l := .Languages}}{{if $i}}<span class="sep">·</span>{{end}}<a data-lang="{{$l.Code}}" class="{{if eq $l.Code $.Lang}}on{{end}}">{{$l.Name}}</a>{{end}}
   </div>
 </div>
-<script src="/static/common.js"></script>
-<script src="/static/setup.js"></script>
+<script src="/static/common.js?v={{.Asset}}"></script>
+<script src="/static/setup.js?v={{.Asset}}"></script>
 </body>
 </html>{{end}}
